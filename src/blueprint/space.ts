@@ -68,7 +68,7 @@ namespace BP {
          * draw_all
          */
         public draw_all() {
-            this.rm.table.forEach(e=>this.draw(e))
+            // this.rm.table.forEach(e=>this.draw(e))
         }
 
         public draw(line: Component.AbLine) {

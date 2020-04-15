@@ -28,13 +28,7 @@
             this._next_id += 1;
             return id;
         }
-
-        /**
-         * draw
-         */
-        public draw() {
-            this._et_root.draw()
-        }
+        
     }
     
     export var rm = new RegMannager();
