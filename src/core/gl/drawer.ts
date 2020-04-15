@@ -1,6 +1,5 @@
-﻿import "fs";
+﻿// import "fs";
 // import { readFile } from "fs";
-import "../PCL";
 import { PCL, Line } from "../PCL/PCL";
 import "./gl";
 import Gl from "./gl";
@@ -13,29 +12,13 @@ uniform vec2 u_offset;
 // uniform mat2 u_rot;
 void main() {
     vec2 p = a_position + u_offset;
-    gl_position = (p,0,1);
+    gl_Position = vec4(p,0.0,1.0);
 }
 `;
 
 const FS = `
-/* Color palette */
-#define BLACK           vec3(0.0, 0.0, 0.0)
-#define WHITE           vec3(1.0, 1.0, 1.0)
-#define RED             vec3(1.0, 0.0, 0.0)
-#define GREEN           vec3(0.0, 1.0, 0.0)
-#define BLUE            vec3(0.0, 0.0, 1.0)
-#define YELLOW          vec3(1.0, 1.0, 0.0)
-#define CYAN            vec3(0.0, 1.0, 1.0)
-#define MAGENTA         vec3(1.0, 0.0, 1.0)
-#define ORANGE          vec3(1.0, 0.5, 0.0)
-#define PURPLE          vec3(1.0, 0.0, 0.5)
-#define LIME            vec3(0.5, 1.0, 0.0)
-#define ACQUA           vec3(0.0, 1.0, 0.5)
-#define VIOLET          vec3(0.5, 0.0, 1.0)
-#define AZUR            vec3(0.0, 0.5, 1.0)
-
 void main() {
-    gl_Color = (AZUR, 1);
+    gl_FragColor = vec4(0.0, 0.5, 1.0, 1.0);
 }
 `
 
@@ -54,8 +37,8 @@ export class Drawer {
     public constructor() {
         this._PCL_buffer = new Array<PCL>();
         this._context = Gl.init();
-        let vert_src = "";
-        let frag_src = "";
+        let vert_src = VS;
+        let frag_src = FS;
         // readFile("./shaders/default.vert", (err, data) => {
         //     if (err) {
         //         throw err;
@@ -105,6 +88,7 @@ export class Drawer {
     // }
 
     private loop(): void {
+        this._shader.use();
         this._context.clear(WebGLRenderingContext.COLOR_BUFFER_BIT);  // 使用颜色缓冲区中的颜色，每次刷新
         // set uniform 
         // let colorPosition = this._shader?.getUniformLocation("u_color");

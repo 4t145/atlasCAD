@@ -24,11 +24,12 @@ export class Line implements PCL{
             WebGLRenderingContext.LINE_STRIP
         );
         let info = new AttributeInfo();
-        info.size = 4;
+        info.size = 2;
         buf.addAttributeLocation(info);
         buf.bind();
         let data = [this._x1, this._y1, this._x2, this._y2];
         buf.pushBackData(data);
+        buf.upload();
         buf.draw();
         buf.unbind();
     }
